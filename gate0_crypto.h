@@ -20,4 +20,23 @@ GATE0_ERR_REPLAY=-7,
 GATE0_ERR_CAPABILITY=-8,
 GATE0_ERR_CHAIN=-9,
 } gate0_status_t;
+typedef struct {
+uint8_t pub[32];
+uint8_t priv[64];
+} gate0_ed25519_keypair_t;
+typedef struct {
+uint8_t pub[32];
+uint8_t priv[32];
+} gate0_x25519_keypair_t;
+typedef struct {
+uint8_t key[32];
+uint64_t nonce_counter;
+} gate0_aead_ctx_t;
+typedef struct {
+uint8_t prev_hash[32];
+uint64_t seq;
+uint64_t timestamp_us;
+uint8_t entry_hash[32];
+uint8_t chain_hash[32];
+} gate0_chain_link_t;
 #endif
