@@ -51,3 +51,9 @@ if(!data||!digest)return GATE0_ERR_BADKEY;
 crypto_hash_sha256(digest,data,len);
 return GATE0_OK;
 }
+gate0_status_t gate0_chain_verify(const gate0_chain_link_t *prev,const gate0_chain_link_t *next){
+if(!prev||!next)return GATE0_ERR_BADKEY;
+if(memcmp(next->prev_hash,prev->chain_hash,32)!=0)return GATE0_ERR_CHAIN;
+if(next->seq!=prev->seq+1)return GATE0_ERR_CHAIN;
+return GATE0_OK;
+}

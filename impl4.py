@@ -1,0 +1,8 @@
+f=open("gate0_crypto.c","a")
+f.write("gate0_status_t gate0_chain_verify(const gate0_chain_link_t *prev,const gate0_chain_link_t *next){\n")
+f.write("if(!prev||!next)return GATE0_ERR_BADKEY;\n")
+f.write("if(memcmp(next->prev_hash,prev->chain_hash,32)!=0)return GATE0_ERR_CHAIN;\n")
+f.write("if(next->seq!=prev->seq+1)return GATE0_ERR_CHAIN;\n")
+f.write("return GATE0_OK;\n")
+f.write("}\n")
+f.close()
