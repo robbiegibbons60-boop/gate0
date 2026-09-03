@@ -1,0 +1,10 @@
+#ifndef GATE0_CRYPTO_H
+#define GATE0_CRYPTO_H
+#include <stdint.h>
+#include <stddef.h>
+#define GATE0_SHA256_BYTES 32
+#define GATE0_ED25519_SIG_BYTES 64
+#define GATE0_CHACHA20_KEY_BYTES 32
+#define GATE0_CHACHA20_NONCE_BYTES 12
+#define GATE0_POLY1305_TAG_BYTES 16
+#endif
