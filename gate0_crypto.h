@@ -51,4 +51,23 @@ gate0_status_t gate0_sha256(const uint8_t *data,size_t len,uint8_t digest[32]);
 gate0_status_t gate0_chain_init(gate0_chain_link_t *link,const uint8_t *entry,size_t len);
 gate0_status_t gate0_chain_append(gate0_chain_link_t *prev,gate0_chain_link_t *next,const uint8_t *entry,size_t len);
 gate0_status_t gate0_chain_verify(const gate0_chain_link_t *prev,const gate0_chain_link_t *next);
+typedef struct {
+uint8_t pub[32];
+uint8_t priv[64];
+} gate0_ed25519_keypair_t;
+typedef struct {
+uint8_t pub[32];
+uint8_t priv[32];
+} gate0_x25519_keypair_t;
+typedef struct {
+uint8_t key[32];
+uint64_t nonce_counter;
+} gate0_aead_ctx_t;
+typedef struct {
+uint8_t prev_hash[32];
+uint64_t seq;
+uint64_t timestamp_us;
+uint8_t entry_hash[32];
+uint8_t chain_hash[32];
+} gate0_chain_link_t;
 #endif

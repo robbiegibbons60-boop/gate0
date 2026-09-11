@@ -1,0 +1,7 @@
+ABI BASELINE - verified Termux/Android x86 - 2026-09-11
+DeviceInfo:      160  (os_name[32], os_release[32], machine_arch[32], hostname[64])
+CommandEnvelope: 310  (version, command_id, sequence, timestamp_ns, sender_id[32], payload[256], payload_len)
+SenderRecord:    41   (public_key[32], last_sequence, used)
+SignedCommand:   374  (envelope + signature[64])
+NOTE: CommandEnvelope does NOT carry AEAD nonce/tag inline.
+      ChaCha20-Poly1305 nonce[12] and tag[16] are transport-layer appended.
