@@ -1,3 +1,4 @@
+#include "consequence_state.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,7 +12,12 @@ int main(int argc, char *argv[]) {
 
     const char *message = (argc > 1) ? argv[1] : "default_gate0_authorization_payload";
 
-    unsigned char pk[crypto_sign_PUBLICKEYBYTES];
+    ConsequenceState cs;
+    cs_init(&cs);
+    cs_update_from_wal(&cs,"gate0.wal");
+    int csr=cs_evaluate_token_request(&cs,"sign","default",0.0);
+    if(csr!=CS_AUTHORIZED){fprintf(stderr,"[-] denied\n");return csr;}
+        unsigned char pk[crypto_sign_PUBLICKEYBYTES];
     unsigned char sk[crypto_sign_SECRETKEYBYTES];
     crypto_sign_keypair(pk, sk);
 
