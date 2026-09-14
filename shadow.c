@@ -49,7 +49,7 @@ void shadow_feed_decoy(ShadowEntry *e) {
 
 void shadow_evict_expired(uint64_t now_ns) {
     for (int i = 0; i < table_count; i++) {
-        if (now_ns - table[i].last_seen_ns > TARPIT_DELAY_NS) {
+        if (now_ns - table[i].last_seen_ns > TARPIT_DELAY_NS && atomic_load_explicit(&table[i].refcount, memory_order_acquire) == 0) {
             table[i] = table[--table_count];
             i--;
         }

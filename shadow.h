@@ -1,4 +1,5 @@
 /* shadow.h - Gate Zero Deception Layer */
+#include <stdatomic.h>
 #ifndef SHADOW_H
 #define SHADOW_H
 #include <stdint.h>
@@ -23,7 +24,15 @@ typedef struct {
     uint32_t decoy_seq;
     uint64_t decoy_issued_ns;
     int tarpit_fd;
+    _Atomic uint32_t refcount;
 } ShadowEntry;
+
+static inline void shadow_entry_get(ShadowEntry *e) {
+    atomic_fetch_add_explicit(&e->refcount, 1u, memory_order_acquire);
+}
+static inline void shadow_entry_put(ShadowEntry *e) {
+    atomic_fetch_sub_explicit(&e->refcount, 1u, memory_order_release);
+}
 #define SHADOW_TABLE_MAX 256
 #define TARPIT_DELAY_NS 2000000000ULL
 void shadow_init(void);
