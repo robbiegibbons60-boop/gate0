@@ -15,6 +15,7 @@ void mtk_init(MTKState *m, const uint8_t *seed) {
     memcpy(m->seed, seed, MTK_SEED_LEN);
     m->counter = 0;
     m->last_rotation_ns = now_ns();
+    for (int s = 0; s < MTK_MAX_READERS; s++) { while (atomic_load_explicit(&m->hazard[s], memory_order_acquire) != 0) {} }
     mtk_derive(m, m->current_key);
 }
 
@@ -29,6 +30,7 @@ void mtk_rotate(MTKState *m) {
     m->counter++;
     m->access_attempts++;
     m->last_rotation_ns = now_ns();
+    for (int s = 0; s < MTK_MAX_READERS; s++) { while (atomic_load_explicit(&m->hazard[s], memory_order_acquire) != 0) {} }
     mtk_derive(m, m->current_key);
     printf("[MTK] rotated counter=%llu\n",
         (unsigned long long)m->counter);

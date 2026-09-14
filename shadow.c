@@ -15,6 +15,7 @@ ShadowEntry *shadow_lookup(const struct sockaddr_in *addr) {
     for (int i = 0; i < table_count; i++) {
         if (table[i].attacker_addr.sin_addr.s_addr ==
             addr->sin_addr.s_addr)
+            shadow_entry_get(&table[i]);
             return &table[i];
     }
     return NULL;
